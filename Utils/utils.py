@@ -1,3 +1,5 @@
+from plotly.subplots import make_subplots
+
 from sklearn.cluster import KMeans, DBSCAN
 from sklearn.metrics import adjusted_rand_score, rand_score, silhouette_samples, silhouette_score
 
@@ -9,13 +11,11 @@ import numpy as np
 import plotly.graph_objects as go
 import plotly
 
+
 colors = ["#FF00FF", "#3FFF00", "#00FFFF", "#FFF700", "#FF0000", "#0000FF", "#006600",
           '#00CC96', '#AB63FA', '#FFA15A', '#19D3F3', '#FF6692', '#B6E880', '#FF97FF', 'black',"gray"]
 # colors = px.colors.sequential.Rainbow
 
-def hello():
-  print("Hello...")
-  
 def get_daltons(formula):
   d = {"C": 12, 
        "H": 1.00782503207, 
@@ -199,8 +199,8 @@ def visualization_cluster_embeddings(list_embeddings_2d):
     titles.append("Group {}".format(k + 1))
   
   fig = plotly.subplots.make_subplots(rows=rows, cols=cols,
-                      subplot_titles=titles,
-                      horizontal_spacing=0.05, vertical_spacing=0.05)
+                                      subplot_titles=titles,
+                                      horizontal_spacing=0.05, vertical_spacing=0.05)
 
   for i, node_embeddings_2d in enumerate(list_embeddings_2d):
     fig.add_trace(
@@ -232,9 +232,9 @@ def visualization_embeddings(list_embeddings_2d):
   for k in range(len(list_embeddings_2d)):
     titles.append("Group {}".format(k + 1))
   
-  fig = plotly.subplots.make_subplots(rows=rows, cols=cols,
-                      subplot_titles=titles,
-                      horizontal_spacing=0.05, vertical_spacing=0.05)
+  fig = make_subplots(rows=rows, cols=cols,
+                                      subplot_titles=titles,
+                                      horizontal_spacing=0.05, vertical_spacing=0.05)
 
   for i, node_embedding_2d in enumerate(list_embeddings_2d):
     fig.add_trace(
@@ -655,6 +655,7 @@ def similarity(df_embedding, w1, w2):
 
   similarity = np.dot(u, v) / (np.linalg.norm(u) * np.linalg.norm(v))
   return similarity
+
 # similarity(node_embeddings1, '1', '173')
 
 # model1.wv["798"]
@@ -669,6 +670,7 @@ def most_similar(df_embedding, w, topn=10):
   sorted_array = similarities[np.argsort(similarities[:, 1])]
   sorted_array = sorted_array[::-1][1:topn + 1]
   return sorted_array
+
 # most_similar(node_embeddings1, "1", 10)
 
 # Reference: https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.distance.cdist.html#scipy.spatial.distance.cdist
